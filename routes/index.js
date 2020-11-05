@@ -1,6 +1,18 @@
 const express = require("express");
 const router = express.Router();
-// const {} = require("./controllers");
+// Require controllers from Concepts
+const {
+  getAllConcepts,
+  createConcept,
+  updateConcept,
+} = require("../controllers/concepts");
+// Require controllers from subacccounts
+const {
+  getAllSubaccounts,
+  createSubaccount,
+  updateSubaccount,
+  deleteSubaccount,
+} = require("../controllers/subaccounts");
 
 /* GET home page */
 router.get("/", (req, res, next) => {
