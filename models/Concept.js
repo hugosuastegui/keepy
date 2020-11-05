@@ -1,4 +1,4 @@
-const { Schema, model } = require("mongoose");
+const { Schema, model, SchemaType } = require("mongoose");
 
 const conceptSchema = new Schema(
   {
@@ -26,6 +26,10 @@ const conceptSchema = new Schema(
     subaccount: {
       type: Schema.Types.ObjectId,
       ref: "Subaccount",
+    },
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
     },
     Invoice: String,
   },
