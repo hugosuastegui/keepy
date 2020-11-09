@@ -9,6 +9,7 @@ exports.getAllSubaccounts = async (req, res, next) => {
 
 exports.createSubaccount = async (req, res, next) => {
   const { name, account } = req.body;
+  console.log(name, account);
   const subaccount = await Subaccount.create({
     name,
     account,

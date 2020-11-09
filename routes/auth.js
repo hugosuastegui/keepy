@@ -32,17 +32,21 @@ router.post("/login", (req, res, next) => {
 });
 
 router.post("/signup", (req, res, next) => {
-  // const email = req.body.email;
-  // const password = req.body.password;
-  const { email, password } = req.body;
-  if (email === "" || password === "") {
-    res.status(401).json({ message: "Indicate username and password" });
-    return;
-  }
+  const { email, password, repeatedPassword } = req.body;
 
   User.findOne({ email }, "email", (err, user) => {
     if (user !== null) {
       res.status(401).json({ message: "The email already exists" });
+      return;
+    }
+
+    if (email === "" || password === "") {
+      res.status(401).json({ message: "Indicate username and password" });
+      return;
+    }
+
+    if (repeatedPassword !== password) {
+      res.status(401).json({ message: "Passwords don't match" });
       return;
     }
 
@@ -67,7 +71,7 @@ router.post("/signup", (req, res, next) => {
 
 router.get("/logout", (req, res) => {
   req.logout();
-  res.redirect("/");
+  res.status(200).json({ message: "Logout successful" });
 });
 
 router.get("/currentuser", (req, res) => {

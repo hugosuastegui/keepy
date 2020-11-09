@@ -6,6 +6,7 @@ const userSchema = new Schema(
     business: String,
     field: String,
     password: String,
+    repeatedPassword: String,
     subaccounts: [
       {
         type: Schema.Types.ObjectId,

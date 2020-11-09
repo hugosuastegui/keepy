@@ -1,5 +1,6 @@
 const User = require("../models/User");
 const Concept = require("../models/Concept");
+const Subaccount = require("../models/Subaccount");
 
 exports.getAllConcepts = async (req, res) => {
   const user = req.user.id;
@@ -24,10 +25,15 @@ exports.createConcept = async (req, res) => {
     month,
     year,
     amount,
-    subaccount,
     invoice,
     user: req.user.id,
   });
+
+  const subaccountId = await Subaccount.find({ name: subaccount }, "_id");
+
+  if (subaccountId) {
+    concept.subaccount = subaccountId;
+  }
 
   await User.findOneAndUpdate(
     { _id: req.user._id },
