@@ -17,4 +17,4 @@ const subaccountSchema = new Schema(
   }
 );
 
-module.exports = model("Account", subaccountSchema);
+module.exports = model("Subaccount", subaccountSchema);

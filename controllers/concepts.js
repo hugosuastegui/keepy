@@ -4,8 +4,9 @@ const Subaccount = require("../models/Subaccount");
 
 exports.getAllConcepts = async (req, res) => {
   const user = req.user.id;
-  const concepts = await find(user);
-  res.status(200).json({ concepts });
+  const concepts = await Concept.find(user);
+  const accum = subtotal(concepts, "amount");
+  res.status(200).json({ concepts, accum });
 };
 
 exports.createConcept = async (req, res) => {
@@ -69,3 +70,18 @@ exports.updateConcept = async (req, res) => {
 
   res.status(200).json({ concept });
 };
+
+// Functions
+
+function subtotal(array, attr) {
+  let newArray = [];
+  array.forEach((curr, ind) => {
+    if (ind === 0) {
+      newArray.push(curr[attr]);
+    } else {
+      let accum = curr[attr] + newArray[ind - 1];
+      newArray.push(accum);
+    }
+  });
+  return newArray;
+}
