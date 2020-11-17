@@ -5,6 +5,7 @@ const {
   getAllConcepts,
   createConcept,
   updateConcept,
+  deleteConcept,
 } = require("../controllers/concepts");
 // Require controllers from subacccounts
 const {
@@ -23,6 +24,7 @@ router.get("/", (req, res, next) => {
 router.get("/concepts", getAllConcepts);
 router.post("/concepts", createConcept);
 router.put("/concepts/:conceptId", updateConcept);
+router.delete("/concepts/:conceptId", deleteConcept);
 
 // ========== SUBACCOUNTS ============
 router.get("/subaccounts", getAllSubaccounts);

@@ -4,7 +4,7 @@ const Subaccount = require("../models/Subaccount");
 
 exports.getAllConcepts = async (req, res) => {
   const user = req.user.id;
-  const concepts = await Concept.find(user);
+  const concepts = await Concept.find({ user });
   const accum = subtotal(concepts, "amount");
   res.status(200).json({ concepts, accum });
 };
@@ -69,6 +69,11 @@ exports.updateConcept = async (req, res) => {
   concept.save();
 
   res.status(200).json({ concept });
+};
+
+exports.deleteConcept = async (req, res) => {
+  await Concept.findByIdAndDelete({ _id: req.params.conceptId });
+  res.status(200).json({ message: "Concept deleted sucessfully" });
 };
 
 // Functions

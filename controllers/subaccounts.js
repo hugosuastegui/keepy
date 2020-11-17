@@ -25,13 +25,14 @@ exports.createSubaccount = async (req, res, next) => {
 
 exports.updateSubaccount = async (req, res, next) => {
   const { name, account } = req.body;
+  console.log(account);
   const { subaccountId } = req.params;
   const subaccount = await Subaccount.findOne({ _id: subaccountId });
   if (typeof name !== undefined) {
     subaccount.name = name;
   }
   if (typeof account !== undefined) {
-    subaccountId.account = account;
+    subaccount.account = account;
   }
   subaccount.save();
   res.status(200).json({ message: "Subaccount updated sucessfully" });
