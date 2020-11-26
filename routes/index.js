@@ -1,12 +1,13 @@
 const express = require("express");
 const router = express.Router();
-// Require controllers from Concepts
+// Require controllers from concepts
 const {
   getAllConcepts,
   createConcept,
   updateConcept,
   deleteConcept,
 } = require("../controllers/concepts");
+
 // Require controllers from subacccounts
 const {
   getAllSubaccounts,
@@ -15,10 +16,24 @@ const {
   deleteSubaccount,
 } = require("../controllers/subaccounts");
 
+// Require controllers from projects
+const {
+  getAllProjects,
+  createProject,
+  updateProject,
+  deleteProject,
+} = require("../controllers/subaccounts");
+
 /* GET home page */
 router.get("/", (req, res, next) => {
   res.send("index");
 });
+
+// ========== PROJECTS ============
+router.get("/projects", getAllProjects);
+router.post("/projects", createProject);
+router.put("/projects/:projectId", updateProject);
+router.delete("/projects/:projectId", deleteProject);
 
 // ========== CONCEPTS ============
 router.get("/concepts", getAllConcepts);
