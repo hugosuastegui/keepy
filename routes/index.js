@@ -22,7 +22,7 @@ const {
   createProject,
   updateProject,
   deleteProject,
-} = require("../controllers/subaccounts");
+} = require("../controllers/projects");
 
 /* GET home page */
 router.get("/", (req, res, next) => {

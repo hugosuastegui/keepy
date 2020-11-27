@@ -3,13 +3,12 @@ const Concept = require("../models/Concept");
 const Subaccount = require("../models/Subaccount");
 const Project = require("../models/Project");
 
-exports.getAllProjects = async (res, req, next) => {
-  const user = req.user.id;
-  const projects = await Project.find({ user });
+exports.getAllProjects = async (req, res, next) => {
+  const projects = await Project.find({ user: req.user.id });
   res.status(200).json({ projects });
 };
 
-exports.createProject = async (res, req, next) => {
+exports.createProject = async (req, res, next) => {
   const user = req.user.id;
   const { name, description } = req.body;
   const project = await Project.create({
@@ -21,7 +20,7 @@ exports.createProject = async (res, req, next) => {
   res.status(200).json({ project });
 };
 
-exports.updateProject = async (res, req, next) => {
+exports.updateProject = async (req, res, next) => {
   const { name, description } = req.body;
   const project = await Project.findOne({ _id: req.params.proejctid });
   if (typeof name !== undefined) {
@@ -34,6 +33,6 @@ exports.updateProject = async (res, req, next) => {
   res.status(200).json({ message: "Project updated succesfully" });
 };
 
-exports.deleteProject = async (res, req, next) => {
+exports.deleteProject = async (req, res, next) => {
   await Project.findByIdAndDelete(req.params.proejctId);
 };
