@@ -1,10 +1,11 @@
 const User = require("../models/User");
+const Project = require("../models/Project");
 const Concept = require("../models/Concept");
 const Subaccount = require("../models/Subaccount");
 
 exports.getAllConcepts = async (req, res) => {
-  const user = req.user.id;
-  const concepts = await Concept.find({ user });
+  const { projectId } = req.params;
+  const concepts = await Concept.find({ project: projectId });
   const accum = subtotal(concepts, "amount");
   res.status(200).json({ concepts, accum });
 };
@@ -20,24 +21,22 @@ exports.createConcept = async (req, res) => {
     invoice,
   } = req.body;
 
+  const [{ id }] = await Subaccount.find({ name: subaccount }, "_id");
+
   const concept = await Concept.create({
     description,
     day,
     month,
     year,
     amount,
+    subaccount: id,
     invoice,
+    project: req.params.projectId,
     user: req.user.id,
   });
 
-  const subaccountId = await Subaccount.find({ name: subaccount }, "_id");
-
-  if (subaccountId) {
-    concept.subaccount = subaccountId;
-  }
-
-  await User.findOneAndUpdate(
-    { _id: req.user._id },
+  await Project.findOneAndUpdate(
+    { _id: req.params.projectId },
     {
       $push: { concepts: concept },
     }
@@ -58,13 +57,15 @@ exports.updateConcept = async (req, res) => {
     invoice,
   } = req.body;
 
+  const [{ id }] = await Subaccount.find({ name: subaccount }, "_id");
+
   const concept = await Concept.findOne({ _id: conceptId });
   concept.description = description;
   concept.day = day;
   concept.month = month;
   concept.year = year;
   concept.amount = amount;
-  concept.subaccount = subaccount;
+  concept.subaccount = id;
   concept.invoice = invoice;
   concept.save();
 
@@ -72,7 +73,15 @@ exports.updateConcept = async (req, res) => {
 };
 
 exports.deleteConcept = async (req, res) => {
-  await Concept.findByIdAndDelete({ _id: req.params.conceptId });
+  const concept = await Concept.findOneAndRemove({ _id: req.params.conceptId });
+  console.log(concept);
+  const project = await Project.findOneAndUpdate(
+    { _id: req.params.projectId },
+    {
+      $pull: { concepts: concept },
+    }
+  );
+  console.log(project);
   res.status(200).json({ message: "Concept deleted sucessfully" });
 };
 

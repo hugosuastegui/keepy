@@ -10,16 +10,10 @@ const userSchema = new Schema(
     field: String,
     password: String,
     repeatedPassword: String,
-    subaccounts: [
+    projects: [
       {
         type: Schema.Types.ObjectId,
-        ref: "Subaccount",
-      },
-    ],
-    concepts: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "Concept",
+        ref: "Project",
       },
     ],
   },

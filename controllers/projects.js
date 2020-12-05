@@ -1,6 +1,4 @@
 const User = require("../models/User");
-const Concept = require("../models/Concept");
-const Subaccount = require("../models/Subaccount");
 const Project = require("../models/Project");
 
 exports.getAllProjects = async (req, res, next) => {
@@ -34,5 +32,6 @@ exports.updateProject = async (req, res, next) => {
 };
 
 exports.deleteProject = async (req, res, next) => {
-  await Project.findByIdAndDelete(req.params.proejctId);
+  await Project.findByIdAndDelete({ _id: req.params.projectId });
+  res.status(200).json({ message: "Project deleted succesfully" });
 };

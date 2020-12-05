@@ -7,9 +7,9 @@ const subaccountSchema = new Schema(
       type: String,
       enum: ["Revenue", "COGS", "SGA", "Taxes", "CapEX"],
     },
-    user: {
+    project: {
       type: Schema.Types.ObjectId,
-      ref: "User",
+      ref: "Project",
     },
   },
   {

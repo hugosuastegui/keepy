@@ -35,16 +35,16 @@ router.post("/projects", createProject);
 router.put("/projects/:projectId", updateProject);
 router.delete("/projects/:projectId", deleteProject);
 
-// ========== CONCEPTS ============
-router.get("/concepts", getAllConcepts);
-router.post("/concepts", createConcept);
-router.put("/concepts/:conceptId", updateConcept);
-router.delete("/concepts/:conceptId", deleteConcept);
-
 // ========== SUBACCOUNTS ============
-router.get("/subaccounts", getAllSubaccounts);
-router.post("/subaccounts", createSubaccount);
+router.get("/subaccounts/:projectId", getAllSubaccounts);
+router.post("/subaccounts/:projectId", createSubaccount);
 router.put("/subaccount/:subaccountId", updateSubaccount);
-router.delete("/subaccount/:subaccountId", deleteSubaccount);
+router.delete("/subaccount/:projectId/:subaccountId", deleteSubaccount);
+
+// ========== CONCEPTS ============
+router.get("/concepts/:projectId", getAllConcepts);
+router.post("/concepts/:projectId", createConcept);
+router.put("/concepts/:conceptId", updateConcept);
+router.delete("/concepts/:projectId/:conceptId", deleteConcept);
 
 module.exports = router;

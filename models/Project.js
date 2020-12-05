@@ -8,14 +8,18 @@ const projectSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "User",
     },
-    subaccounts: {
-      type: Schema.Types.ObjectId,
-      ref: "Subaccount",
-    },
-    concepts: {
-      type: Schema.Types.ObjectId,
-      ref: "Concepts",
-    },
+    subaccounts: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Subaccount",
+      },
+    ],
+    concepts: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Concept",
+      },
+    ],
   },
   { timestamps: true }
 );

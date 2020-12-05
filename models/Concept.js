@@ -27,6 +27,10 @@ const conceptSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "Subaccount",
     },
+    project: {
+      type: Schema.Types.ObjectId,
+      ref: "Project",
+    },
     user: {
       type: Schema.Types.ObjectId,
       ref: "User",
