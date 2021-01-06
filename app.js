@@ -12,6 +12,7 @@ const path = require("path");
 const session = require("express-session");
 const MongoStore = require("connect-mongo")(session);
 const flash = require("connect-flash");
+const cors = require("cors");
 
 mongoose
   .connect("mongodb://localhost/keepy", { useNewUrlParser: true })
@@ -36,6 +37,11 @@ app.use(logger("dev"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(
+  cors({
+    origin: ["http://localhost:3001"],
+  })
+);
 
 // Express View engine setup
 
