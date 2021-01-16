@@ -20,6 +20,7 @@ const projectSchema = new Schema(
         ref: "Concept",
       },
     ],
+    image: String,
   },
   { timestamps: true }
 );
