@@ -24,6 +24,9 @@ const {
   deleteProject,
 } = require("../controllers/projects");
 
+// Require controllers from users
+const { updateUser } = require("../controllers/users");
+
 /* GET home page */
 router.get("/", (req, res, next) => {
   res.send("index");
@@ -46,5 +49,9 @@ router.get("/concepts/:projectId", getAllConcepts);
 router.post("/concepts/:projectId", createConcept);
 router.put("/concepts/:conceptId", updateConcept);
 router.delete("/concepts/:projectId/:conceptId", deleteConcept);
+
+// ========== USERS ============
+
+router.put("/users/:userId", updateUser);
 
 module.exports = router;

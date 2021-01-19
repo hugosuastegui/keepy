@@ -32,7 +32,7 @@ router.post("/login", (req, res, next) => {
 });
 
 router.post("/signup", (req, res, next) => {
-  const { email, password, repeatedPassword } = req.body;
+  const { email, username, password, repeatedPassword } = req.body;
 
   User.findOne({ email }, "email", (err, user) => {
     if (user !== null) {
@@ -54,6 +54,7 @@ router.post("/signup", (req, res, next) => {
     const hashPass = bcrypt.hashSync(password, salt);
 
     const newUser = new User({
+      username,
       email,
       password: hashPass,
     });
