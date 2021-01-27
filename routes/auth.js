@@ -75,8 +75,15 @@ router.get("/logout", (req, res) => {
   res.status(200).json({ message: "Logout successful" });
 });
 
-router.get("/currentuser", (req, res) => {
-  res.status(200).json({ user: req.user });
+router.get("/currentuser", async (req, res) => {
+  await User.findById(req.user._id)
+    .populate("projects")
+    .then((user) => res.status(200).json({ user }))
+    .catch((err) =>
+      res
+        .status(500)
+        .json({ message: `Error ocurred in get /currentuser ${err}` })
+    );
 });
 
 module.exports = router;
