@@ -8,10 +8,11 @@ exports.getAllProjects = async (req, res, next) => {
 
 exports.createProject = async (req, res, next) => {
   const user = req.user.id;
-  const { name, description } = req.body;
+  const { name, description, category } = req.body;
   const project = await Project.create({
     name,
     description,
+    category,
     user,
   });
   await User.findByIdAndUpdate({ _id: user }, { $push: { projects: project } });
@@ -19,13 +20,16 @@ exports.createProject = async (req, res, next) => {
 };
 
 exports.updateProject = async (req, res, next) => {
-  const { name, description } = req.body;
+  const { name, description, category } = req.body;
   const project = await Project.findOne({ _id: req.params.proejctid });
   if (typeof name !== undefined) {
     project.name = name;
   }
   if (typeof description !== undefined) {
     project.description = description;
+  }
+  if (typeof category !== undefined) {
+    project.category = category;
   }
   project.save();
   res.status(200).json({ message: "Project updated succesfully" });

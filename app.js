@@ -15,7 +15,10 @@ const flash = require("connect-flash");
 const cors = require("cors");
 
 mongoose
-  .connect("mongodb://localhost/keepy", { useNewUrlParser: true })
+  .connect("mongodb://localhost/keepy", {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
   .then((x) => {
     console.log(
       `Connected to Mongo! Database name: "${x.connections[0].name}"`

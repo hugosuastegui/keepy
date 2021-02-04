@@ -75,8 +75,8 @@ router.get("/logout", (req, res) => {
   res.status(200).json({ message: "Logout successful" });
 });
 
-router.get("/currentuser", async (req, res) => {
-  await User.findById(req.user._id)
+router.get("/currentuser", isAuth, async (req, res) => {
+  await User.findById(req.user.id)
     .populate("projects")
     .then((user) => res.status(200).json({ user }))
     .catch((err) =>
@@ -85,5 +85,11 @@ router.get("/currentuser", async (req, res) => {
         .json({ message: `Error ocurred in get /currentuser ${err}` })
     );
 });
+
+function isAuth(req, res, next) {
+  req.isAuthenticated()
+    ? next()
+    : res.status(401).json({ message: "Log in first" });
+}
 
 module.exports = router;

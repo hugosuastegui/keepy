@@ -4,6 +4,10 @@ const projectSchema = new Schema(
   {
     name: String,
     description: String,
+    category: {
+      type: String,
+      enum: ["business", "project"],
+    },
     user: {
       type: Schema.Types.ObjectId,
       ref: "User",
