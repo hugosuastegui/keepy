@@ -6,6 +6,11 @@ exports.getAllProjects = async (req, res, next) => {
   res.status(200).json({ projects });
 };
 
+exports.getProject = async (req, res, next) => {
+  const project = await Project.findOne({ _id: req.params.projectId });
+  res.status(200).json({ project });
+};
+
 exports.createProject = async (req, res, next) => {
   const user = req.user.id;
   const { name, description, category } = req.body;
@@ -21,7 +26,7 @@ exports.createProject = async (req, res, next) => {
 
 exports.updateProject = async (req, res, next) => {
   const { name, description, category } = req.body;
-  const project = await Project.findOne({ _id: req.params.proejctid });
+  const project = await Project.findOne({ _id: req.params.proejctId });
   if (typeof name !== undefined) {
     project.name = name;
   }

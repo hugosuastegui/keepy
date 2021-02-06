@@ -22,6 +22,7 @@ const {
   createProject,
   updateProject,
   deleteProject,
+  getProject,
 } = require("../controllers/projects");
 
 // Require controllers from users
@@ -34,6 +35,7 @@ router.get("/", (req, res, next) => {
 
 // ========== PROJECTS ============
 router.get("/projects", getAllProjects);
+router.get("/projects/:projectId", getProject);
 router.post("/projects", createProject);
 router.put("/projects/:projectId", updateProject);
 router.delete("/projects/:projectId", deleteProject);
