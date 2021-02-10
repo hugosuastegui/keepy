@@ -26,7 +26,8 @@ exports.createProject = async (req, res, next) => {
 
 exports.updateProject = async (req, res, next) => {
   const { name, description, category } = req.body;
-  const project = await Project.findOne({ _id: req.params.proejctId });
+  console.log(req.params.projectId);
+  const project = await Project.findOne({ _id: req.params.projectId });
   if (typeof name !== undefined) {
     project.name = name;
   }
