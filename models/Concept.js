@@ -3,7 +3,7 @@ const { Schema, model } = require("mongoose");
 const conceptSchema = new Schema(
   {
     description: String,
-    day: Number,
+    day: String,
     month: {
       type: String,
       enum: [
@@ -21,7 +21,7 @@ const conceptSchema = new Schema(
         "Dec",
       ],
     },
-    year: Number,
+    year: String,
     amount: Number,
     subaccount: {
       type: Schema.Types.ObjectId,
