@@ -3,7 +3,6 @@ const Subaccount = require("../models/Subaccount");
 
 exports.getAllSubaccounts = async (req, res, next) => {
   const { projectId } = req.params;
-  console.log(projectId);
   const subaccounts = await Subaccount.find({ project: projectId });
   res.status(200).json({ subaccounts });
 };
