@@ -5,7 +5,9 @@ const Subaccount = require("../models/Subaccount");
 
 exports.getAllConcepts = async (req, res) => {
   const { projectId } = req.params;
-  const concepts = await Concept.find({ project: projectId });
+  const concepts = await Concept.find({ project: projectId }).populate(
+    "subaccount"
+  );
   const accum = subtotal(concepts, "amount");
   res.status(200).json({ concepts, accum });
 };
@@ -74,14 +76,12 @@ exports.updateConcept = async (req, res) => {
 
 exports.deleteConcept = async (req, res) => {
   const concept = await Concept.findOneAndRemove({ _id: req.params.conceptId });
-  console.log(concept);
   const project = await Project.findOneAndUpdate(
     { _id: req.params.projectId },
     {
       $pull: { concepts: concept },
     }
   );
-  console.log(project);
   res.status(200).json({ message: "Concept deleted sucessfully" });
 };
 

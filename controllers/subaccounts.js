@@ -9,7 +9,6 @@ exports.getAllSubaccounts = async (req, res, next) => {
 
 exports.createSubaccount = async (req, res, next) => {
   const { projectId } = req.params;
-  console.log(projectId);
   const { name, account } = req.body;
   const subaccount = await Subaccount.create({
     name,
@@ -22,8 +21,6 @@ exports.createSubaccount = async (req, res, next) => {
       $push: { subaccounts: subaccount },
     }
   );
-
-  console.log(project);
 
   res.status(200).json({ subaccount });
 };
