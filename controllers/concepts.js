@@ -23,7 +23,7 @@ exports.createConcept = async (req, res) => {
     invoice,
   } = req.body;
 
-  const [{ id }] = await Subaccount.find({ name: subaccount }, "_id");
+  const [{ id }] = await Subaccount.find({ name: subaccount.name }, "_id");
 
   const concept = await Concept.create({
     description,
