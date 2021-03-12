@@ -6,6 +6,7 @@ const {
   createConcept,
   updateConcept,
   deleteConcept,
+  getAllConceptsByYear,
 } = require("../controllers/concepts");
 
 // Require controllers from subacccounts
@@ -48,6 +49,7 @@ router.delete("/subaccount/:projectId/:subaccountId", deleteSubaccount);
 
 // ========== CONCEPTS ============
 router.get("/concepts/:projectId", getAllConcepts);
+router.get("/concepts/:projectId/:year", getAllConceptsByYear);
 router.post("/concepts/:projectId", createConcept);
 router.put("/concepts/:conceptId", updateConcept);
 router.delete("/concepts/:projectId/:conceptId", deleteConcept);

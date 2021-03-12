@@ -83,7 +83,81 @@ exports.deleteConcept = async (req, res) => {
     }
   );
   res.status(200).json({ message: "Concept deleted sucessfully" });
-};
+
+  // Brief
+
+  exports.getAllConceptsByYear = async (req, res) => {
+    const { projectId } = req.params;
+    const { year } = req.params;
+
+    const rawData = await Concept.find({ project: projectId, year }).populate(
+      "subaccount"
+    );
+
+    const data;
+    const accounts = [];
+    const months = [];
+    const subaccounts = [];
+
+    rawData.forEach((el) => {
+      if (!accounts.includes(el.subaccount.account)) {
+        accounts.push(el.subaccount.account);
+      }
+    });
+
+    rawData.forEach((el) => {
+      if (!subaccounts.includes(el.subaccount.name)) {
+        subaccounts.push(el.subaccount.name);
+      }
+    });
+
+    rawData.forEach((el) => {
+      if (!months.includes(el.month)) {
+        months.push(el.month);
+      }
+    });
+
+    console.log(rawData);
+
+    accounts.forEach((account) => {
+      const accountSubtotals = [];
+      months.forEach((month) => {
+        let subtotal = rawData
+          .filter(
+            (el) => el.subaccount.account === account && el.month === month
+          )
+          .reduce((accum, curr) => accum + curr);
+        accountSubtotals.push(subtotal);
+      });
+
+      subaccounts.forEach((subaccount) => {
+        const subaccountSubtotals = [];
+        const subaccountArray = [];
+        months.forEach((month) => {
+          let subtotal = rawData
+            .filter(
+              (el) => el.subaccount.name === subaccount && el.month === month
+            )
+            .reduce((accum, curr) => accum + curr);
+          subaccountSubtotals.push(subtotal);
+        });
+        subaccountArray.push({
+          subaccount: subaccount,
+          values: subaccountSubtotals,
+        });
+      });
+
+      data.push({
+        name: account,
+        values: subtotals,
+        subaccounts: subaccountArray,
+      });
+      subtotals = [];
+    });
+
+    console.log(data);
+    res.status(200).json({ data });
+  };
 
 // Functions
 
