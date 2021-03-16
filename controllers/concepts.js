@@ -96,32 +96,45 @@ exports.getAllConceptsByYear = async (req, res) => {
   }).populate("subaccount");
 
   const data = [];
-  const accounts = [];
-  const months = [];
   const subaccounts = [];
+  const subaccountIds = [];
+
+  const accounts = [
+    "Revenue",
+    "COGS",
+    "SG&A",
+    "Taxes",
+    "CapEX",
+    "Dividends",
+    "Retained Earnings",
+  ];
+
+  const months = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
 
   rawData.forEach((el) => {
-    if (!accounts.includes(el.subaccount.account)) {
-      accounts.push(el.subaccount.account);
-    }
-  });
-
-  rawData.forEach((el) => {
-    if (!subaccounts.includes(el.subaccount.name)) {
-      subaccounts.push(el.subaccount.name);
-    }
-  });
-
-  rawData.forEach((el) => {
-    if (!months.includes(el.month)) {
-      months.push(el.month);
+    if (!subaccountIds.includes(el.subaccount._id)) {
+      subaccountIds.push(el.subaccount._id);
+      subaccounts.push(el.subaccount);
     }
   });
 
   accounts.forEach((account) => {
-    const accountSubtotals = [];
-    const subaccountSubtotals = [];
-    const subaccountArray = [];
+    let accountSubtotals = [];
+    let subaccountSubtotals = [];
+    let subaccountArray = [];
 
     months.forEach((month) => {
       let subtotal = rawData
@@ -136,16 +149,21 @@ exports.getAllConceptsByYear = async (req, res) => {
           .filter(
             (el) =>
               el.subaccount.account === account &&
-              el.subaccount.name === subaccount &&
+              el.subaccount.name === subaccount.name &&
               el.month === month
           )
           .reduce((accum, curr) => accum + curr.amount, 0);
         subaccountSubtotals.push(subtotal);
+        // console.log(subaccountSubtotals);
       });
-      subaccountArray.push({
-        subaccount: subaccount,
-        values: subaccountSubtotals,
-      });
+
+      if (subaccount.account === account) {
+        subaccountArray.push({
+          subaccount: subaccount.name,
+          values: subaccountSubtotals,
+        });
+      }
+      subaccountSubtotals = [];
     });
 
     data.push({
@@ -153,6 +171,7 @@ exports.getAllConceptsByYear = async (req, res) => {
       values: accountSubtotals,
       subaccounts: subaccountArray,
     });
+
     subtotals = [];
   });
 
