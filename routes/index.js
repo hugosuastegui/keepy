@@ -6,7 +6,6 @@ const {
   createConcept,
   updateConcept,
   deleteConcept,
-  getAllConceptsByYear,
 } = require("../controllers/concepts");
 
 // Require controllers from subacccounts
@@ -29,6 +28,9 @@ const {
 // Require controllers from users
 const { updateUser } = require("../controllers/users");
 
+// Require controllers from brief
+const { getAllConceptsByYear } = require("../controllers/brief");
+
 /* GET home page */
 router.get("/", (req, res, next) => {
   res.send("index");
@@ -49,10 +51,13 @@ router.delete("/subaccount/:projectId/:subaccountId", deleteSubaccount);
 
 // ========== CONCEPTS ============
 router.get("/concepts/:projectId", getAllConcepts);
-router.get("/concepts/:projectId/:year", getAllConceptsByYear);
 router.post("/concepts/:projectId", createConcept);
 router.put("/concepts/:conceptId", updateConcept);
 router.delete("/concepts/:projectId/:conceptId", deleteConcept);
+
+// ========== BRIEF ============
+
+router.get("/brief/:projectId/:year", getAllConceptsByYear);
 
 // ========== USERS ============
 
