@@ -4,6 +4,8 @@ exports.getAllConceptsByYear = async (req, res) => {
   const { projectId } = req.params;
   const { year } = req.params;
 
+  console.log(projectId, year);
+
   const rawData = await Concept.find({
     project: projectId,
     year: year.toString(),
