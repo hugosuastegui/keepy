@@ -4,8 +4,6 @@ exports.getAllConceptsByYear = async (req, res) => {
   const { projectId } = req.params;
   const { year } = req.params;
 
-  console.log(projectId, year);
-
   const rawData = await Concept.find({
     project: projectId,
     year: year.toString(),
@@ -91,5 +89,36 @@ exports.getAllConceptsByYear = async (req, res) => {
     subtotals = [];
   });
 
+  //Aquí tenemos que meterle GROSS MARGIN
+  data.splice(2, 0, {
+    name: "Gross Profit",
+    subaccounts: [],
+    values: await sustract(data[0].values, data[1].values),
+  });
+
+  //Aquí tenemos que meterle GROSS MARGIN %
+  // data.splice(3, 0, {
+  //   name: "Gross Margin",
+  //   values: margin(data[3].values, data[0]).values,
+  // });
+  //Aquí tenemos que meterle EBITDA
+  //Aquí tenemos que meterle EBITDA %
+
   res.status(200).json({ data });
+};
+
+function sustract(array1, array2) {
+  return array1.map(function (el, ind) {
+    return el - array2[ind];
+  });
+}
+
+const margin = (array1, array2) => {
+  return array1.map((el, ind) => {
+    if (array2[ind] !== 0) {
+      return ((el / array2[ind]) * 100).toFixed(1) + "%";
+    } else {
+      return "N/A";
+    }
+  });
 };
