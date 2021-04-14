@@ -29,7 +29,10 @@ const {
 const { updateUser } = require("../controllers/users");
 
 // Require controllers from brief
-const { getAllConceptsByYear } = require("../controllers/brief");
+const {
+  getAllConceptsByYear,
+  getAllConceptYears,
+} = require("../controllers/brief");
 
 /* GET home page */
 router.get("/", (req, res, next) => {
@@ -57,6 +60,7 @@ router.delete("/concepts/:projectId/:conceptId", deleteConcept);
 
 // ========== BRIEF ============
 
+router.get("/brief/:projectId/years", getAllConceptYears);
 router.get("/brief/:projectId/:year", getAllConceptsByYear);
 
 // ========== USERS ============

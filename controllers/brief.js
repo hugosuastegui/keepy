@@ -119,6 +119,20 @@ exports.getAllConceptsByYear = async (req, res) => {
   res.status(200).json({ data });
 };
 
+exports.getAllConceptYears = async (req, res) => {
+  const years = await Concept.find().distinct(
+    "year",
+    function (error, results) {
+      return results;
+    }
+  );
+
+  years.sort(function (a, b) {
+    return a - b;
+  });
+  res.status(200).json({ years });
+};
+
 function sustract(array1, array2) {
   return array1.map(function (el, ind) {
     return el - array2[ind];
