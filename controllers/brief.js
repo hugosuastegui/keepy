@@ -89,7 +89,7 @@ exports.getAllConceptsByYear = async (req, res) => {
     subtotals = [];
   });
 
-  //Aquí tenemos que meterle GROSS MARGIN
+  //Aquí tenemos que meterle GROSS PROFIT
   data.splice(2, 0, {
     name: "Gross Profit",
     subaccounts: [],
