@@ -10,7 +10,6 @@ const bcryptSalt = 10;
 router.post("/login", (req, res, next) => {
   passport.authenticate("local", (err, user, failureDetails) => {
     if (err) {
-      console.log(failureDetails);
       res
         .status(500)
         .json({ message: "Something went wrong authenticating user" });

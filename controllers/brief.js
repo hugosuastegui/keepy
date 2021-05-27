@@ -68,7 +68,6 @@ exports.getAllConceptsByYear = async (req, res) => {
           )
           .reduce((accum, curr) => accum + curr.amount, 0);
         subaccountSubtotals.push(subtotal);
-        // console.log(subaccountSubtotals);
       });
 
       if (subaccount.account === account) {
