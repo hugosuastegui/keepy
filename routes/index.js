@@ -34,6 +34,10 @@ const {
   getAllConceptYears,
 } = require("../controllers/brief");
 
+// Require from Helpers
+
+const { getAllSubaccountsCatalogued } = require("../controllers/helpers");
+
 /* GET home page */
 router.get("/", (req, res, next) => {
   res.send("index");
@@ -63,8 +67,13 @@ router.delete("/concepts/:projectId/:conceptId", deleteConcept);
 router.get("/brief/:projectId/years", getAllConceptYears);
 router.get("/brief/:projectId/:year", getAllConceptsByYear);
 
-// ========== USERS ============
-
 router.put("/users/:userId", updateUser);
+
+// ========== HELPERS ============
+
+router.get(
+  "/helpers/catalogued-subaccounts/:projectId",
+  getAllSubaccountsCatalogued
+);
 
 module.exports = router;
