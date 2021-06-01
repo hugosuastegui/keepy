@@ -25,6 +25,14 @@ const {
   getProject,
 } = require("../controllers/projects");
 
+// Require controllers from kpis
+const {
+  getAllKpis,
+  createKpi,
+  updateKpi,
+  deleteKpi,
+} = require("../controllers/kpi");
+
 // Require controllers from users
 const { updateUser } = require("../controllers/users");
 
@@ -62,11 +70,16 @@ router.post("/concepts/:projectId", createConcept);
 router.put("/concepts/:conceptId", updateConcept);
 router.delete("/concepts/:projectId/:conceptId", deleteConcept);
 
+// ========== KPIs ============
+router.get("/kpis/:projectId", getAllKpis);
+router.post("/kpis/:projectId", createKpi);
+router.put("/kpis/:kpiId", updateKpi);
+router.delete("/kpis/:projectId/:kpiId", deleteKpi);
+
 // ========== BRIEF ============
 
 router.get("/brief/:projectId/years", getAllConceptYears);
 router.get("/brief/:projectId/:year", getAllConceptsByYear);
-
 router.put("/users/:userId", updateUser);
 
 // ========== HELPERS ============

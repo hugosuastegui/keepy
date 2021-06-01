@@ -24,6 +24,12 @@ const projectSchema = new Schema(
         ref: "Concept",
       },
     ],
+    kpis: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Kpi",
+      },
+    ],
     image: String,
   },
   { timestamps: true }
