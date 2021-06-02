@@ -4,8 +4,9 @@ const Subaccount = require("../models/Subaccount");
 
 exports.getAllKpis = async (req, res) => {
   const { projectId } = req.params;
-  const kpis = await Kpi.find({ project: projectId });
-  console.log(kpis);
+  const kpis = await Kpi.find({ project: projectId })
+    .populate("metric1")
+    .populate("metric2");
   res.status(200).json({ kpis });
 };
 
