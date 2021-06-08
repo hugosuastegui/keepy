@@ -19,6 +19,12 @@ const subaccountSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "Project",
     },
+    budgets: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Budget",
+      },
+    ],
   },
   {
     timestamps: true,

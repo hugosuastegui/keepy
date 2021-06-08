@@ -17,9 +17,6 @@ exports.createKpi = async (req, res) => {
   const subaccount1Id = await Subaccount.findOne({ name: metric1 }, "_id");
   const subaccount2Id = await Subaccount.findOne({ name: metric2 }, "_id");
 
-  console.log(subaccount1Id);
-  console.log(subaccount2Id);
-
   const kpi = await Kpi.create({
     name,
     description,

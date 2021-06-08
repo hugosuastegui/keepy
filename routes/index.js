@@ -42,9 +42,17 @@ const {
   getAllConceptYears,
 } = require("../controllers/brief");
 
-// Require from Helpers
+// Require controllers from Helpers
 
 const { getAllSubaccountsCatalogued } = require("../controllers/helpers");
+
+// Require controllers from budget
+
+const {
+  createBudget,
+  updateBudget,
+  getBudgetByYearByMonth,
+} = require("../controllers/budget");
 
 /* GET home page */
 router.get("/", (req, res, next) => {
@@ -88,5 +96,11 @@ router.get(
   "/helpers/catalogued-subaccounts/:projectId",
   getAllSubaccountsCatalogued
 );
+
+// ========== BUDGET ============
+
+router.get("/budget/:projectId/:year/:month", getBudgetByYearByMonth);
+router.post("/budget/:projectId", createBudget);
+router.put("/budget/:budgetId", updateBudget);
 
 module.exports = router;

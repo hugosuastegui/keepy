@@ -30,6 +30,12 @@ const projectSchema = new Schema(
         ref: "Kpi",
       },
     ],
+    budgets: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Budget",
+      },
+    ],
     image: String,
   },
   { timestamps: true }
