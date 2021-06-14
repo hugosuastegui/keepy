@@ -51,7 +51,8 @@ const { getAllSubaccountsCatalogued } = require("../controllers/helpers");
 const {
   createBudget,
   updateBudget,
-  getBudgetByYearByMonth,
+  deleteBudgetsByMonthByYear,
+  getBudgetByYear,
 } = require("../controllers/budget");
 
 /* GET home page */
@@ -99,8 +100,12 @@ router.get(
 
 // ========== BUDGET ============
 
-router.get("/budget/:projectId/:year/:month", getBudgetByYearByMonth);
+router.get("/budget/:projectId/:year", getBudgetByYear);
 router.post("/budget/:projectId", createBudget);
 router.put("/budget/:budgetId", updateBudget);
+router.delete(
+  "/budget/:projectId/:subaccountId/:year/:month",
+  deleteBudgetsByMonthByYear
+);
 
 module.exports = router;
